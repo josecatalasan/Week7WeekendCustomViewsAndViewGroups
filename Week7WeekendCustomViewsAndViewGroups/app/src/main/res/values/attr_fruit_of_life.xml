@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FruitOfLifeView">
+        <attr name="radius" format="integer"/>
+        <attr name="fruitColor" format="integer"/>
+        <attr name="xPosition" format="integer"/>
+        <attr name="yPosition" format="integer"/>
+    </declare-styleable>
+</resources>
