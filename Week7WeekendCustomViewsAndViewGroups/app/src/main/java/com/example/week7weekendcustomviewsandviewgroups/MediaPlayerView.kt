@@ -28,6 +28,7 @@ class MediaPlayerView : ConstraintLayout {
     private fun init(){
         LinearLayout.inflate(context, R.layout.layout_media_player, this)
         setupButtonListeners()
+        enableButtons(true)
 
         sbProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, boolean: Boolean) {
@@ -44,14 +45,12 @@ class MediaPlayerView : ConstraintLayout {
         super.onLayout(changed, left, top, right, bottom)
     }
 
-    private fun initSeekBar(){
-        sbProgress.max = player!!.duration
-
+    private fun seekbarUpdater(){
         runnable = Runnable{
             sbProgress.progress = player!!.currentPosition
-            seekBarHandler.postDelayed(runnable, 1000)
+            seekBarHandler.postDelayed(runnable, 500)
         }
-        seekBarHandler.postDelayed(runnable, 1000)
+        seekBarHandler.postDelayed(runnable, 500)
 
     }
 
@@ -62,19 +61,23 @@ class MediaPlayerView : ConstraintLayout {
                 player = MediaPlayer.create(context, media!!)
                 player!!.setOnCompletionListener { stopPlayer() }
                 player!!.start()
-
-                initSeekBar()
+                sbProgress.max = player!!.duration
 
             } else {
                 player?.start()
             }
+            seekbarUpdater()
+            enableButtons(false)
         }
 
         //setup Pause Button listener
         btnPause.setOnClickListener {
             if (player != null) {
                 player!!.pause()
+                seekBarHandler.removeCallbacks(runnable)
             }
+            btnPlay.isEnabled = true
+            btnPause.isEnabled = false
         }
 
         //setup Stop Button listener
@@ -90,6 +93,13 @@ class MediaPlayerView : ConstraintLayout {
             sbProgress.progress = 0
             seekBarHandler.removeCallbacks(runnable)
         }
+        enableButtons(true)
     }
 
+    private fun enableButtons(startEnabled : Boolean){
+        btnPlay.isEnabled = startEnabled
+        btnPause.isEnabled = !startEnabled
+        btnStop.isEnabled = !startEnabled
+        sbProgress.isEnabled = !startEnabled
+    }
 }
