@@ -14,22 +14,27 @@ import kotlin.math.sin
 
 class FruitOfLifeView : View {
 
-    var radius : Int? = null
+    var radius : Int = 0
         set(value) {
             field = value
             invalidate()
         }
-    var color : Int? = null
+    var color : Int = 0
         set(value) {
             field = value
             invalidate()
         }
-    var xPosition : Int? = null
+    var xPosition : Int = 0
         set(value) {
             field = value
             invalidate()
         }
-    var yPosition : Int? = null
+    var yPosition : Int = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var lineWidth : Int = 0
         set(value) {
             field = value
             invalidate()
@@ -37,17 +42,18 @@ class FruitOfLifeView : View {
 
     private val paint = Paint()
 
-    constructor(context: Context?):this(context, null)
+    constructor(context: Context):this(context, null)
 
-    constructor(context: Context?, attrs: AttributeSet?):this(context,attrs,0)
+    constructor(context: Context, attrs: AttributeSet?):this(context,attrs,0)
 
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int):super(context,attrs,defStyleAttr){
-        val typedArray = context?.obtainStyledAttributes(attrs, R.styleable.FruitOfLifeView)
-        radius = typedArray?.getInt(R.styleable.FruitOfLifeView_radius, 100)
-        color = typedArray?.getInt(R.styleable.FruitOfLifeView_fruitColor, Color.BLACK)
-        xPosition = typedArray?.getInt(R.styleable.FruitOfLifeView_xPosition, 500)
-        yPosition = typedArray?.getInt(R.styleable.FruitOfLifeView_yPosition, 500)
-        typedArray?.recycle()
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int):super(context,attrs,defStyleAttr){
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.FruitOfLifeView)
+        radius = typedArray.getInt(R.styleable.FruitOfLifeView_radius, 100)
+        color = typedArray.getInt(R.styleable.FruitOfLifeView_fruitColor, Color.BLACK)
+        xPosition = typedArray.getInt(R.styleable.FruitOfLifeView_xPosition, 500)
+        yPosition = typedArray.getInt(R.styleable.FruitOfLifeView_yPosition, 500)
+        lineWidth = typedArray.getInt(R.styleable.FruitOfLifeView_lineWidth, 10)
+        typedArray.recycle()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -55,15 +61,15 @@ class FruitOfLifeView : View {
 
     override fun onDraw(canvas: Canvas?) {
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10f
-        paint.color = color!!
+        paint.strokeWidth = lineWidth.toFloat()
+        paint.color = color
 
-        if(radius!! > 500){
+        if(radius > 500){
             radius = 500
         }
 
         //draw all the circles
-        drawFruitOfLife(canvas, xPosition!!.toFloat(), yPosition!!.toFloat(), radius!!.toFloat(), paint)
+        drawFruitOfLife(canvas, xPosition.toFloat(), yPosition.toFloat(), radius.toFloat(), paint)
         super.onDraw(canvas)
 
     }

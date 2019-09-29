@@ -14,7 +14,7 @@ class ChangingTextView : TextView, View.OnClickListener, View.OnLongClickListene
     private var stylePicker = -1
     private val styles = arrayOf(Typeface.BOLD, Typeface.ITALIC, Typeface.BOLD_ITALIC, Typeface.NORMAL)
     private var colorPicker = -1
-    var colors = arrayListOf(Color.BLACK,Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA,Color.RED,Color.YELLOW)
+    var colors = arrayListOf(Color.BLACK,Color.BLUE,Color.CYAN,Color.GREEN,Color.MAGENTA,Color.RED,Color.YELLOW, currentTextColor)
 
     constructor(context: Context?):this(context, null)
 
@@ -23,8 +23,6 @@ class ChangingTextView : TextView, View.OnClickListener, View.OnLongClickListene
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int):super(context,attrs,defStyleAttr){
         //val typedArray = context?.obtainStyledAttributes(attrs, R.styleable.FruitOfLifeView)
         //typedArray?.recycle()
-        if(!colors.contains(currentTextColor))
-            colors.add(currentTextColor)
         setOnClickListener(this)
         setOnLongClickListener(this)
 

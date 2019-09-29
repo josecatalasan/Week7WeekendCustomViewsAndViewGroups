@@ -14,7 +14,8 @@
         android:layout_height="400dp"
         app:radius="200"
         app:xPosition="500"
-        app:yPosition="600"/>
+        app:yPosition="600"
+        app:lineWidth="25"/>
 
     <Button
         android:id="@+id/btnChange"
@@ -24,11 +25,20 @@
         android:onClick="onClick"/>
 
     <com.example.week7weekendcustomviewsandviewgroups.ChangingTextView
+        android:id="@+id/ctvOne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="TESTING"
         android:textSize="24sp"
         android:textAlignment="center"
+        android:textColor="#673AB7"
         android:typeface="monospace"/>
+
+    <com.example.week7weekendcustomviewsandviewgroups.MediaPlayerView
+        android:id="@+id/mediaPlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"/>
 
 </LinearLayout>

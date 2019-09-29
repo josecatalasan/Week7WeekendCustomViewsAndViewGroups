@@ -8,23 +8,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-//    1. Create a custom view by extending a View Class
-//          -seed of life view, confetti view, firework view
-//    2. Create a custom view by extending a AndroidView(Button/Textview) class
-//          -dropdown button, custom font textview, color changing text
-//    3. Create a custom layout by extending the layout class (should have at least 4 children)
-//          -music player view, image manipulator, birthday query view
-//
-//    - Add more functionality to the custom views
-//
-//    - Add setters and getters to the views to set/get values in the Activities
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        ctvOne.colors = arrayListOf(Color.DKGRAY, Color.LTGRAY, ctvOne.currentTextColor)
+
+        mediaPlayerView.media = R.raw.arurian_dance
     }
 
-    var colorNumber = 1
+    var colorNumber = -1
     fun onClick(view: View) {
         colorNumber++
         when(colorNumber%4) {
