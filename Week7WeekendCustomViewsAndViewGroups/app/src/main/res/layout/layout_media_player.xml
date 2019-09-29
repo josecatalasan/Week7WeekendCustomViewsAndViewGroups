@@ -7,7 +7,7 @@
         android:id="@+id/sbProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentTime"/>
 
     <Button
         android:id="@+id/btnPlay"
@@ -34,6 +34,20 @@
         android:text="@string/button_stop"
         app:layout_constraintTop_toBottomOf="@+id/sbProgress"
         app:layout_constraintLeft_toRightOf="@id/btnPause"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvCurrentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvTimeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
 </merge>

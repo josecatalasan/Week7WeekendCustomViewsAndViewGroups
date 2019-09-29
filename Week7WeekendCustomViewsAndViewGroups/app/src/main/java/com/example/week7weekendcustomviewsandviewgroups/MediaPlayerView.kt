@@ -34,6 +34,7 @@ class MediaPlayerView : ConstraintLayout {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, boolean: Boolean) {
                 if(boolean && player != null){
                     player!!.seekTo(progress)
+                    updateTimes()
                 }
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -48,29 +49,31 @@ class MediaPlayerView : ConstraintLayout {
     private fun seekbarUpdater(){
         runnable = Runnable{
             sbProgress.progress = player!!.currentPosition
-            seekBarHandler.postDelayed(runnable, 500)
+            updateTimes()
+            seekBarHandler.postDelayed(runnable, 250)
         }
-        seekBarHandler.postDelayed(runnable, 500)
+        seekBarHandler.postDelayed(runnable, 250)
 
     }
 
     private fun setupButtonListeners(){
-        //setup Play Button listener
+        //Play
         btnPlay.setOnClickListener {
             if (player == null && media != null) {
                 player = MediaPlayer.create(context, media!!)
                 player!!.setOnCompletionListener { stopPlayer() }
                 player!!.start()
                 sbProgress.max = player!!.duration
+                updateTimes()
 
             } else {
-                player?.start()
+                player!!.start()
             }
             seekbarUpdater()
             enableButtons(false)
         }
 
-        //setup Pause Button listener
+        //Pause
         btnPause.setOnClickListener {
             if (player != null) {
                 player!!.pause()
@@ -80,7 +83,7 @@ class MediaPlayerView : ConstraintLayout {
             btnPause.isEnabled = false
         }
 
-        //setup Stop Button listener
+        //Stop
         btnStop.setOnClickListener {
             stopPlayer()
         }
@@ -91,6 +94,8 @@ class MediaPlayerView : ConstraintLayout {
             player!!.release()
             player = null
             sbProgress.progress = 0
+            tvTimeLeft.text = ""
+            tvCurrentTime.text = ""
             seekBarHandler.removeCallbacks(runnable)
         }
         enableButtons(true)
@@ -102,4 +107,25 @@ class MediaPlayerView : ConstraintLayout {
         btnStop.isEnabled = !startEnabled
         sbProgress.isEnabled = !startEnabled
     }
+
+    private fun updateTimes(){
+        val currentTime = "${player!!.currentSeconds/60}m ${player!!.currentSeconds%60}s"
+        val diff = player!!.seconds-player!!.currentSeconds
+        val timeLeft = "${diff/60}m ${diff%60}s"
+        tvCurrentTime.text = currentTime
+        tvTimeLeft.text = timeLeft
+    }
+
+    // Extension property to get media player duration in seconds
+    val MediaPlayer.seconds:Int
+        get() {
+            return this.duration / 1000
+        }
+
+
+    // Extension property to get media player current position in seconds
+    val MediaPlayer.currentSeconds:Int
+        get() {
+            return this.currentPosition/1000
+        }
 }
